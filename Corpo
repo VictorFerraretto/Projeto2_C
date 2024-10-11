@@ -4,6 +4,7 @@
 #include <time.h>
 #include <locale.h>
 
+// JOGO GUESS
 void guess(){
   int num_adv;
   printf("=========== ADIVINHE ==========\n");
@@ -47,6 +48,7 @@ void dados(){
   printf("\n<--- volte com 'ENTER'\n");
   getchar();
 };
+// MOSTRAR O MENU DE JOGOS
 void menu_jogos(){
   
   int cont;
@@ -77,6 +79,7 @@ void menu_jogos(){
   };
 };
 
+// MOSTRAR O MENU PRINCIPAL
 void menu(){
 
   int cont;
