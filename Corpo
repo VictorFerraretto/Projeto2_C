@@ -79,6 +79,20 @@ void menu_jogos(){
     
   };
 };
+
+// MOSTRAR INVENTARIO
+void seu_inventario(){
+    printf("===========Inventário===========\n");
+    printf("| REAIS: %.2f\n", carteira[indice]);
+    printf("| ITENS: ");
+   //ver depois 
+    printf("===========================\n");
+    printf("\n<--- volte com 'ENTER'\n"); 
+    getchar();
+    return;	
+  
+};
+
 //TESTAR DEPOIS
 // DEPOSITAR 
 void depositar(float *carteira){
