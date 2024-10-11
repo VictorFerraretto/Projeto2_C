@@ -3,6 +3,11 @@
 #include <string.h>
 #include <time.h>
 #include <locale.h>
+#define NUM_OF_USERS 10
+
+float carteira[NUM_OF_USERS]={};
+int indice;
+int i = 0;
 
 // JOGO GUESS
 void guess(){
@@ -43,7 +48,7 @@ void guess(){
   printf("\n<--- volte com 'ENTER'\n");
   getchar();
 };
-//JOGO DADOS
+// JOGO DADOS
 void dados(){
   printf("oi\n");
   printf("\n<--- volte com 'ENTER'\n");
@@ -92,8 +97,7 @@ void seu_inventario(){
     return;	
   
 };
-
-//TESTAR DEPOIS
+//testar depois
 // DEPOSITAR 
 void depositar(float *carteira) {
     float valor;
@@ -108,7 +112,34 @@ void depositar(float *carteira) {
         carteira[indice] += valor;  // Lembre-se de definir o 'indice' corretamente
         printf("Depósito de R$%.2f realizado com sucesso!\n", valor);
     }
+  printf("\n<--- volte com 'ENTER'\n");
+  getchar();
 };
+//testar depois
+// SACAR
+void sacar(float *carteira) {
+
+    float valor;
+    char sen[6];
+    while(1){
+
+        printf("Quanto deseja sacar (ou 0 para não depositar): ");
+        scanf("%f", &valor);
+
+
+        if (valor > carteira[indice]) {
+            printf("ERRO: Você não pode sacar dinheiro a mais do que o disponível em sua carteira!! (carteira: %.2f)\n",
+                  carteira[indice]);
+        }
+        
+    }
+    carteira[indice] -= valor;
+    printf("Saque de R$%.2f realizado com sucesso!\n", valor);
+
+  printf("\n<--- volte com 'ENTER'\n");
+  getchar();
+}
+
 
 // MOSTRAR O MENU PRINCIPAL
 void menu(){
@@ -121,13 +152,12 @@ void menu(){
     printf("O que você deseja acessar?\n");
     printf("--------------------------\n");
     printf("-> 1-Jogar\n");
-    printf("-> 2-Sua carteira\n");
+    printf("-> 2-Seu inventário\n");
     printf("-> 3-Depositar\n");
     printf("-> 4-Sacar\n");
     printf("-> 5-Loja\n");
-    printf("-> 6-Inventário\n");
-    printf("-> 7-Histórico\n");
-    printf("-> 8-Sair\n");
+    printf("-> 6-Histórico\n");
+    printf("-> 7-Sair\n");
     printf("===========================\n");
     scanf("%d", &cont);
     printf("\n");
@@ -139,24 +169,27 @@ void menu(){
         getchar();
         break;
       case 2:
+        seu_inventario();
+        getchar();
         break;
       case 3:
+        depositar(carteira);
+        getchar();
         break;
       case 4:
+        sacar(carteira);
+        getchar();
         break;
       case 5:
         break;
       case 6:
         break;
       case 7:
-        break;
-      case 8:
         printf("DESCONECTANDO...\n");
         return;
     }
   }
 }
-
 
 int main(){
   setlocale(LC_ALL, "portuguese");
