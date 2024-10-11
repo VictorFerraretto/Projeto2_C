@@ -43,6 +43,7 @@ void guess(){
   printf("\n<--- volte com 'ENTER'\n");
   getchar();
 };
+//JOGO DADOS
 void dados(){
   printf("oi\n");
   printf("\n<--- volte com 'ENTER'\n");
@@ -77,6 +78,14 @@ void menu_jogos(){
     };
     
   };
+};
+//TESTAR DEPOIS
+// DEPOSITAR 
+void depositar(float *carteira){
+  float valor;
+  printf("Quanto deseja depositar (ou 0 para não depositar), MAX(R$50.00):\n");
+  scanf("%f", &valor);
+  carteira[indice] += valor;
 };
 
 // MOSTRAR O MENU PRINCIPAL
