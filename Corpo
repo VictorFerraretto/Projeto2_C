@@ -81,11 +81,19 @@ void menu_jogos(){
 };
 //TESTAR DEPOIS
 // DEPOSITAR 
-void depositar(float *carteira){
-  float valor;
-  printf("Quanto deseja depositar (ou 0 para não depositar), MAX(R$50.00):\n");
-  scanf("%f", &valor);
-  carteira[indice] += valor;
+void depositar(float *carteira) {
+    float valor;
+    printf("Quanto deseja depositar (ou 0 para não depositar), MAX(R$50.00):\n");
+    scanf("%f", &valor);
+
+    if (valor < 0) {
+        printf("Valor inválido. O depósito deve ser positivo.\n");
+    } else if (valor > 50) {
+        printf("O valor máximo para depósito é R$50.00.\n");
+    } else {
+        carteira[indice] += valor;  // Lembre-se de definir o 'indice' corretamente
+        printf("Depósito de R$%.2f realizado com sucesso!\n", valor);
+    }
 };
 
 // MOSTRAR O MENU PRINCIPAL
