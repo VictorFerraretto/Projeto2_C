@@ -1,0 +1,133 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <locale.h>
+
+void guess(){
+  int num_adv;
+  printf("=========== ADIVINHE ==========\n");
+  printf("==    Você terá 5 chances!   ==\n");
+  printf("==  escolhendo um número ... ==\n");
+  srand(time(NULL));
+  int num_escolhido = rand() % 100 +1;
+  printf("\n  Adivinhe um número de 1 a 100:\n");
+
+  for (int i = 0;i<5;i++){
+  scanf("%d", &num_adv);
+  if (i== 4){
+          if (num_adv != num_escolhido){
+              printf("--JOGO PERDIDO :( , O número escolhido era %d--\n", num_escolhido);
+          }
+          else {
+              printf("***UFA!! Você ACERTOU!!!***\n");
+              break;
+          }
+  }
+
+  else{
+  if (num_adv < num_escolhido){
+      printf("--incorreto, tente um número MAIOR!--\n");
+  }
+  else if (num_adv> num_escolhido){
+      printf("--Incorreto, tente um número MENOR!--\n");
+  }
+  else if (num_adv == num_escolhido){
+      printf("***Parabéns você ACERTOU!!!***\n");
+      break;
+  }
+  }
+
+ }
+  printf("\n<--- volte com 'ENTER'\n");
+  getchar();
+};
+void dados(){
+  printf("oi\n");
+  printf("\n<--- volte com 'ENTER'\n");
+  getchar();
+};
+void menu_jogos(){
+  
+  int cont;
+
+  while(1){
+    printf("\n");
+    printf("=============JOGOS==========\n");
+    printf("--------------------------\n");
+    printf("-> 1-Dados\n");
+    printf("-> 2-Adivinhe\n");
+    printf("-> 3-Volte para o menu\n");
+    printf("============================\n");
+    scanf("%d", &cont);
+    printf("\n");
+    switch (cont){
+      case 1:
+        dados();
+        getchar();
+        break;
+      case 2:
+        guess();
+        getchar();
+        break;
+      case 3:
+        return;
+    };
+    
+  };
+};
+
+void menu(){
+
+  int cont;
+
+  while(1){
+    printf("\n");
+    printf("=============MENU==========\n");
+    printf("O que você deseja acessar?\n");
+    printf("--------------------------\n");
+    printf("-> 1-Jogar\n");
+    printf("-> 2-Sua carteira\n");
+    printf("-> 3-Depositar\n");
+    printf("-> 4-Sacar\n");
+    printf("-> 5-Loja\n");
+    printf("-> 6-Inventário\n");
+    printf("-> 7-Histórico\n");
+    printf("-> 8-Sair\n");
+    printf("===========================\n");
+    scanf("%d", &cont);
+    printf("\n");
+
+
+      switch (cont){
+      case 1:
+        menu_jogos();
+        getchar();
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
+      case 7:
+        break;
+      case 8:
+        printf("DESCONECTANDO...\n");
+        return;
+    }
+  }
+}
+
+
+int main(){
+  setlocale(LC_ALL, "portuguese");
+  menu();
+
+  system("pause");
+  return 0;
+}
