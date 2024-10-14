@@ -301,13 +301,28 @@ void menu(){
         menu_jogos();
         getchar();
         break;
+      case 2:
+        seu_inventario();
+        getchar();
+        break;
+      case 3:
+        depositar(carteira);
+        getchar();
+        break;
+      case 4:
+        sacar(carteira);
+        getchar();
+        break;
+      case 5:
+        break;
+      case 6:
+        break;
       case 7:
         printf("DESCONECTANDO...\n");
         return;
     }
   }
 }
-
 
 int main(){
   setlocale(LC_ALL, "Portuguese");
