@@ -3,87 +3,15 @@
 #include <string.h>
 #include <time.h>
 #include <locale.h>
-#define NUM_OF_USERS 10
+#include <unistd.h>
 
-float carteira[NUM_OF_USERS]={};
+#define max_usu 100
+char cpf_lista[max_usu][12];
+char senha_lista[max_usu][12];
 int indice;
-int i = 0;
-
-// JOGO GUESS
-void guess(){
-  int num_adv;
-  printf("=========== ADIVINHE ==========\n");
-  printf("==    Você terá 5 chances!   ==\n");
-  printf("==  escolhendo um número ... ==\n");
-  srand(time(NULL));
-  int num_escolhido = rand() % 100 +1;
-  printf("\n  Adivinhe um número de 1 a 100:\n");
-
-  for (int i = 0;i<5;i++){
-  scanf("%d", &num_adv);
-  if (i== 4){
-          if (num_adv != num_escolhido){
-              printf("--JOGO PERDIDO :( , O número escolhido era %d--\n", num_escolhido);
-          }
-          else {
-              printf("***UFA!! Você ACERTOU!!!***\n");
-              break;
-          }
-  }
-
-  else{
-  if (num_adv < num_escolhido){
-      printf("--incorreto, tente um número MAIOR!--\n");
-  }
-  else if (num_adv> num_escolhido){
-      printf("--Incorreto, tente um número MENOR!--\n");
-  }
-  else if (num_adv == num_escolhido){
-      printf("***Parabéns você ACERTOU!!!***\n");
-      break;
-  }
-  }
-
- }
-  printf("\n<--- volte com 'ENTER'\n");
-  getchar();
-};
-// JOGO DADOS
-void dados(){
-  printf("oi\n");
-  printf("\n<--- volte com 'ENTER'\n");
-  getchar();
-};
-// MOSTRAR O MENU DE JOGOS
-void menu_jogos(){
-  
-  int cont;
-
-  while(1){
-    printf("\n");
-    printf("=============JOGOS==========\n");
-    printf("--------------------------\n");
-    printf("-> 1-Dados\n");
-    printf("-> 2-Adivinhe\n");
-    printf("-> 3-Volte para o menu\n");
-    printf("============================\n");
-    scanf("%d", &cont);
-    printf("\n");
-    switch (cont){
-      case 1:
-        dados();
-        getchar();
-        break;
-      case 2:
-        guess();
-        getchar();
-        break;
-      case 3:
-        return;
-    };
-    
-  };
-};
+float carteira[max_usu];
+char cpf[12],senha[7];
+int i=0;
 
 // MOSTRAR INVENTARIO
 void seu_inventario(){
@@ -141,7 +69,212 @@ void sacar(float *carteira) {
 }
 
 
-// MOSTRAR O MENU PRINCIPAL
+//apenas login , senha e carteira 
+
+void iniciacao_arquivos(float *carteira){
+  FILE *arquivoini;
+  FILE *arquivoini2;
+  FILE *carteiraarqui;
+  char compiler[2000];
+  
+
+  arquivoini = fopen("login.txt","r");
+  for (int i=0;i<max_usu && fgets(compiler, sizeof(compiler), arquivoini);i++) {
+      compiler[strcspn(compiler, "\n")] = 0; 
+
+      strcpy(cpf_lista[i], compiler); 
+
+  }
+  fclose(arquivoini);
+
+  arquivoini2 = fopen("senhas.txt","r");
+  for (int i=0;i<max_usu && fgets(compiler, sizeof(compiler), arquivoini2);i++) {
+    compiler[strcspn(compiler, "\n")] = 0; 
+
+    strcpy(senha_lista[i], compiler); 
+
+  }
+  fclose(arquivoini2);
+  
+  carteiraarqui = fopen("carteira.bin","rb");
+  fread(carteira, sizeof(float), max_usu, carteiraarqui);
+  fclose(carteiraarqui);
+  
+  
+}
+
+void login(int *indice){
+  int x;
+  while (1){
+  printf("Olá, por acaso você já é cadastrado?\n");
+  printf("1- Sim ou 2-Não\n");
+  scanf("%d",&x);
+  if (x== 1){
+  
+    printf("BEM VINDO!!\n");
+    printf("Digite seu CPF: ");
+    scanf("%11s", cpf);
+    printf("Digite sua senha: ");
+    scanf("%6s", senha);
+
+    for (int i = 0; i < max_usu; i++) {
+      if (strcmp(cpf_lista[i], cpf)== 0) {
+        if (strcmp(senha_lista[i],senha)==0){
+          printf("\nLogin realizado com sucesso!\n");
+          *indice = i;
+          return;
+        }
+
+
+
+      }
+    }
+    printf("\nCPF ou senha incorretos!\n");
+
+  
+  }
+  else if (x== 2){
+    char login[12],pass[7];
+    FILE *arquivo;
+    FILE *arquivo2;
+    printf("Vamos cadastrar você!\n");
+    printf("Digite seu CPF: ");
+    scanf("%11s", login);
+    printf("Crie uma senha: ");
+    scanf("%6s", pass);
+
+    printf("\nÓtimo você foi cadastrado !!!\n");
+    
+    arquivo = fopen("login.txt","a");
+    fprintf(arquivo,"%s\n",login);
+    fclose(arquivo);
+    arquivo2 = fopen("senhas.txt","a");
+    fprintf(arquivo2,"%s\n",pass);
+    fclose(arquivo2);
+    
+    iniciacao_arquivos(carteira);
+  }
+  
+  else{
+    printf("Opção inválida!\n");
+  }
+}
+}
+
+
+
+
+void guess(){
+    int num_adv;
+    printf("=========== ADIVINHE ==========\n");
+    sleep(1);
+    printf("==    Você terá 5 chances!   ==\n");
+    sleep(1.5);
+    printf("==  escolhendo um número ... ==\n");
+    sleep(2.5);
+    srand(time(NULL));
+    int num_escolhido = rand() % 100 +1;
+    printf("\n  Adivinhe um número de 1 a 100:\n");
+
+    for (int i = 0;i<5;i++){
+    scanf("%d", &num_adv);
+    if (i== 4){
+            sleep(2);
+            if (num_adv != num_escolhido){
+                printf("--JOGO PERDIDO :( , O número escolhido era %d--\n", num_escolhido);
+                sleep(2);
+            }
+            else {
+                printf("***UFA!! Você ACERTOU!!!***\n");
+                sleep(2);
+                break;
+            }
+    }
+
+    else{
+    if (num_adv < num_escolhido){
+        sleep(1.5);
+        printf("--incorreto, tente um número MAIOR!--\n");
+    }
+    else if (num_adv> num_escolhido){
+        sleep(1.5);
+        printf("--Incorreto, tente um número MENOR!--\n");
+    }
+    else if (num_adv == num_escolhido){
+        sleep(2);
+        printf("***Parabéns você ACERTOU!!!***\n");
+        sleep(2);
+        break;
+    }
+    }
+
+}
+}
+
+void dice(){
+    int dados[4] = {};
+
+    printf("\n===========DADOS===========\n");
+    srand(time(NULL));
+    for (int i = 0; i<4;i++){
+
+         dados[i]= rand() % 6 + 1;
+
+    }
+    printf ("Você joga os dados ...\n");
+    sleep(1);
+    printf("Você tira %d e %d\n",dados[0] ,dados[1]);
+    sleep(1.5);
+    int pontos_player= dados[0] + dados[1];
+    printf ("A mesa joga os dados ...\n");
+    sleep(2);
+    printf("Ela tira %d e %d\n",dados[2] ,dados[3]);
+    sleep(1);
+    int pontos_mesa = dados[2] + dados[3];
+    if (pontos_player < pontos_mesa){
+        printf("Que pena!! você PERDEU :(\n");
+        printf("============================\n");
+    }
+    else if (pontos_player> pontos_mesa){
+        printf("Parabens, você ganhou!!\n");
+        printf("============================\n");
+    }
+    else if (pontos_player == pontos_mesa){
+        printf("UAU!! vocês EMPATARAM.\n");
+        printf("============================\n");
+    }
+    sleep(1);
+
+}
+void menu_jogos(){
+
+  int cont;
+
+  while(1){
+    printf("\n");
+    printf("=============JOGOS==========\n");
+    printf("--------------------------\n");
+    printf("-> 1-Dados\n");
+    printf("-> 2-Adivinhe\n");
+    printf("-> 3-Volte para o menu\n");
+    printf("============================\n");
+    scanf("%d", &cont);
+    printf("\n");
+    switch (cont){
+      case 1:
+        dice();
+        getchar();
+        break;
+      case 2:
+        guess();
+        getchar();
+        break;
+      case 3:
+        return;
+    };
+
+  };
+};
 void menu(){
 
   int cont;
@@ -192,9 +325,9 @@ void menu(){
 }
 
 int main(){
-  setlocale(LC_ALL, "portuguese");
+  setlocale(LC_ALL, "Portuguese");
+  iniciacao_arquivos(carteira);
+  login(&indice);
   menu();
-
-  system("pause");
   return 0;
 }
