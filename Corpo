@@ -9,13 +9,9 @@
 char cpf_lista[max_usu][12];
 char senha_lista[max_usu][12];
 int indice;
+float carteira[max_usu];
 char cpf[12],senha[7];
-
-float carteira[NUM_OF_USERS]={};
-int i = 0;
-
-
-
+int i=0;
 
 // MOSTRAR INVENTARIO
 void seu_inventario(){
@@ -73,12 +69,14 @@ void sacar(float *carteira) {
 }
 
 
-//apenas login e senha carteira depois
-void iniciacao_arquivos(){
+//apenas login , senha e carteira 
+
+void iniciacao_arquivos(float *carteira){
   FILE *arquivoini;
   FILE *arquivoini2;
+  FILE *carteiraarqui;
   char compiler[2000];
-  int i=0;
+  
 
   arquivoini = fopen("login.txt","r");
   for (int i=0;i<max_usu && fgets(compiler, sizeof(compiler), arquivoini);i++) {
@@ -97,8 +95,14 @@ void iniciacao_arquivos(){
 
   }
   fclose(arquivoini2);
+  
+  carteiraarqui = fopen("carteira.bin","rb");
+  fread(carteira, sizeof(float), max_usu, carteiraarqui);
+  fclose(carteiraarqui);
+  
+  
 }
-//login
+
 void login(int *indice){
   int x;
   while (1){
@@ -148,7 +152,7 @@ void login(int *indice){
     fprintf(arquivo2,"%s\n",pass);
     fclose(arquivo2);
     
-    iniciacao_arquivos();
+    iniciacao_arquivos(carteira);
   }
   
   else{
@@ -159,7 +163,7 @@ void login(int *indice){
 
 
 
-// jogos guess - dados
+
 void guess(){
     int num_adv;
     printf("=========== ADIVINHE ==========\n");
@@ -242,7 +246,6 @@ void dice(){
     sleep(1);
 
 }
-//MENU
 void menu_jogos(){
 
   int cont;
@@ -306,13 +309,10 @@ void menu(){
 }
 
 
-
-
 int main(){
   setlocale(LC_ALL, "Portuguese");
-  iniciacao_arquivos();
+  iniciacao_arquivos(carteira);
   login(&indice);
   menu();
   return 0;
-
 }
