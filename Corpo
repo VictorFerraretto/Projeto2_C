@@ -17,29 +17,32 @@ int i=0;
 void seu_inventario(){
     printf("===========Inventário===========\n");
     printf("| REAIS: %.2f\n", carteira[indice]);
-    printf("| ITENS: ");
+    printf("| ITENS: \n");
    //ver depois 
     printf("===========================\n");
     printf("\n<--- volte com 'ENTER'\n"); 
     getchar();
     return;	
-  
+
 };
 //testar depois
 // DEPOSITAR 
 void depositar(float *carteira) {
     float valor;
-    printf("Quanto deseja depositar (ou 0 para não depositar), MAX(R$50.00):\n");
+  while(1){
+    printf("Quanto deseja depositar (ou 0 para não depositar), MAX(R$5000.00):\n");
     scanf("%f", &valor);
 
     if (valor < 0) {
         printf("Valor inválido. O depósito deve ser positivo.\n");
-    } else if (valor > 50) {
-        printf("O valor máximo para depósito é R$50.00.\n");
+    } else if (valor > 5000) {
+        printf("O valor máximo para depósito é R$5000.00.\n");
     } else {
         carteira[indice] += valor;  // Lembre-se de definir o 'indice' corretamente
         printf("Depósito de R$%.2f realizado com sucesso!\n", valor);
+        break;
     }
+  }
   printf("\n<--- volte com 'ENTER'\n");
   getchar();
 };
@@ -58,11 +61,16 @@ void sacar(float *carteira) {
         if (valor > carteira[indice]) {
             printf("ERRO: Você não pode sacar dinheiro a mais do que o disponível em sua carteira!! (carteira: %.2f)\n",
                   carteira[indice]);
+          
+
         }
-        
+        else{
+        carteira[indice] -= valor;
+        printf("Saque de R$%.2f realizado com sucesso!\n", valor);
+        break;
+        }
     }
-    carteira[indice] -= valor;
-    printf("Saque de R$%.2f realizado com sucesso!\n", valor);
+
 
   printf("\n<--- volte com 'ENTER'\n");
   getchar();
@@ -76,7 +84,7 @@ void iniciacao_arquivos(float *carteira){
   FILE *arquivoini2;
   FILE *carteiraarqui;
   char compiler[2000];
-  
+
 
   arquivoini = fopen("login.txt","r");
   for (int i=0;i<max_usu && fgets(compiler, sizeof(compiler), arquivoini);i++) {
@@ -95,12 +103,12 @@ void iniciacao_arquivos(float *carteira){
 
   }
   fclose(arquivoini2);
-  
+
   carteiraarqui = fopen("carteira.bin","rb");
   fread(carteira, sizeof(float), max_usu, carteiraarqui);
   fclose(carteiraarqui);
-  
-  
+
+
 }
 
 void login(int *indice){
@@ -110,7 +118,7 @@ void login(int *indice){
   printf("1- Sim ou 2-Não\n");
   scanf("%d",&x);
   if (x== 1){
-  
+
     printf("BEM VINDO!!\n");
     printf("Digite seu CPF: ");
     scanf("%11s", cpf);
@@ -131,7 +139,7 @@ void login(int *indice){
     }
     printf("\nCPF ou senha incorretos!\n");
 
-  
+
   }
   else if (x== 2){
     char login[12],pass[7];
@@ -144,17 +152,17 @@ void login(int *indice){
     scanf("%6s", pass);
 
     printf("\nÓtimo você foi cadastrado !!!\n");
-    
+
     arquivo = fopen("login.txt","a");
     fprintf(arquivo,"%s\n",login);
     fclose(arquivo);
     arquivo2 = fopen("senhas.txt","a");
     fprintf(arquivo2,"%s\n",pass);
     fclose(arquivo2);
-    
+
     iniciacao_arquivos(carteira);
   }
-  
+
   else{
     printf("Opção inválida!\n");
   }
@@ -275,6 +283,14 @@ void menu_jogos(){
 
   };
 };
+
+void atualização(float *carteira){
+  FILE *carteiraarqui;
+  carteiraarqui = fopen("carteira.bin","wb");
+  size_t escrevendo =fwrite(carteira, sizeof(carteira), max_usu, carteiraarqui);
+  fclose(carteiraarqui);
+}
+
 void menu(){
 
   int cont;
@@ -319,6 +335,7 @@ void menu(){
         break;
       case 7:
         printf("DESCONECTANDO...\n");
+        atualização(carteira);
         return;
     }
   }
