@@ -25,7 +25,49 @@ void seu_inventario(){
     return;	
 
 };
-//testar depois
+
+
+// ADICIONAR RESULTADO AO HISTÓRICO
+void adicionar_historico(const char* cpf, const char* tipo_jogo, const char* resultado, float valor_apostado) {
+    char nome_arquivo[30];
+    sprintf(nome_arquivo, "%s_historico.txt", cpf); 
+
+    FILE *arquivo = fopen(nome_arquivo, "a");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de histórico.\n");
+        return;
+    }
+
+    fprintf(arquivo, "%s,%s,%.2f\n", tipo_jogo, resultado, valor_apostado);
+    fclose(arquivo);
+}
+
+// EXIBIR HISTÓRICO
+void historico(const char* cpf) {
+    char nome_arquivo[30];
+    sprintf(nome_arquivo, "%s_historico.txt", cpf);
+
+    FILE *arquivo = fopen(nome_arquivo, "r");
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo de histórico.\n");
+        return;
+    }
+
+    char linha[100];
+    printf("\n=========== HISTÓRICO ===========\n");
+    while (fgets(linha, sizeof(linha), arquivo)) {
+        char tipo_jogo[20], resultado[10];
+        float valor_apostado;
+
+        sscanf(linha, "%[^,],%[^,],%f", tipo_jogo, resultado, &valor_apostado);
+        printf("Tipo de Jogo: %s | Resultado: %s | Valor Apostado: R$%.2f\n", 
+               tipo_jogo, resultado, valor_apostado);
+    }
+    fclose(arquivo);
+    printf("===================================\n");
+}
+
+
 // DEPOSITAR 
 void depositar(float *carteira) {
     float valor;
@@ -38,7 +80,7 @@ void depositar(float *carteira) {
     } else if (valor > 5000) {
         printf("O valor máximo para depósito é R$5000.00.\n");
     } else {
-        carteira[indice] += valor;  // Lembre-se de definir o 'indice' corretamente
+        carteira[indice] += valor; 
         printf("Depósito de R$%.2f realizado com sucesso!\n", valor);
         break;
     }
@@ -46,7 +88,7 @@ void depositar(float *carteira) {
   printf("\n<--- volte com 'ENTER'\n");
   getchar();
 };
-//testar depois
+
 // SACAR
 void sacar(float *carteira) {
 
@@ -76,9 +118,7 @@ void sacar(float *carteira) {
   getchar();
 }
 
-
-//apenas login , senha e carteira 
-
+// APENAS LOGIN, CARTEIRA E SENHA
 void iniciacao_arquivos(float *carteira){
   FILE *arquivoini;
   FILE *arquivoini2;
@@ -110,7 +150,6 @@ void iniciacao_arquivos(float *carteira){
 
 
 }
-
 void login(int *indice){
   int x;
   while (1){
@@ -169,8 +208,7 @@ void login(int *indice){
 }
 }
 
-
-
+// APOSTA
 int apostar(float *carteira){
   float aposta;
   while(1){
@@ -189,6 +227,7 @@ int apostar(float *carteira){
   return aposta;
 }
 
+// GUESS
 void guess(float *carteira){
     float aposta= apostar(carteira);
     carteira[indice] -= aposta;
@@ -212,12 +251,14 @@ void guess(float *carteira){
                 printf("Como você apostou R$%.2f, logo você perdeu R$%.2f.\n",aposta,aposta);
                 printf("====================================");
                 sleep(2);
+                adicionar_historico(cpf,"Adivinhe", "Derrota", aposta);
             }
             else {
                 printf("***UFA!! Você ACERTOU!!!***\n");
                 printf("Como você apostou R$%.2f você ganha + R$%.2f.\n",aposta,aposta);
                 printf("====================================");
                 sleep(2);
+                adicionar_historico(cpf,"Adivinhe", "Vitória", aposta);
                 carteira[indice] += aposta * 2;
                 break;
             }
@@ -238,6 +279,7 @@ void guess(float *carteira){
         printf("Como você apostou R$%.2f você ganha + R$%.2f.\n",aposta,aposta);
         printf("====================================");
         sleep(2);
+        adicionar_historico(cpf,"Adivinhe", "Vitória", aposta);
         carteira[indice] += aposta * 2;
         break;
     }
@@ -246,6 +288,7 @@ void guess(float *carteira){
 }
 }
 
+// DICE
 void dice(float *carteira){
     int dados[4] = {};
     float aposta= apostar(carteira);
@@ -272,22 +315,27 @@ void dice(float *carteira){
         printf("Que pena!! você PERDEU :(\n");
         printf("Como você apostou R$%.2f você perdeu R$%.2f.\n",aposta,aposta);
         printf("============================\n");
+        adicionar_historico(cpf,"Dados", "Derrota", aposta);
     }
     else if (pontos_player> pontos_mesa){
         printf("Parabens, você ganhou!!\n");
         printf("Como você apostou R$%.2f você ganha + R$%.2f.\n",aposta,aposta);
         carteira[indice] += aposta * 2;
         printf("============================\n");
+        adicionar_historico(cpf,"Dados", "Vitória", aposta);
     }
     else if (pontos_player == pontos_mesa){
         printf("UAU!! vocês EMPATARAM.\n");
         printf("Como você apostou R$%.2f você receberá R$%.2f de volta.\n",aposta,aposta);
         carteira[indice] += aposta;
         printf("============================\n");
+        adicionar_historico(cpf,"Dados", "Empate", aposta);
     }
     sleep(2);
 
 }
+
+// MENU DE JOGOS
 void menu_jogos(){
 
   int cont;
@@ -318,6 +366,7 @@ void menu_jogos(){
   };
 };
 
+// ATUALIZAÇÃO
 void atualização(float *carteira){
   FILE *carteiraarqui;
   carteiraarqui = fopen("carteira.bin","wb");
@@ -325,6 +374,7 @@ void atualização(float *carteira){
   fclose(carteiraarqui);
 }
 
+// MENU PRINCIPAL
 void menu(){
 
   int cont;
@@ -366,6 +416,8 @@ void menu(){
       case 5:
         break;
       case 6:
+        historico(cpf);
+        getchar();
         break;
       case 7:
         printf("DESCONECTANDO...\n");
