@@ -1,0 +1,5 @@
+44921880883 Tipo de Jogo: Dados | Resultado: Vitória | Valor Apostado: R$500,00
+44921880883 Tipo de Jogo: Dados | Resultado: Derrota | Valor Apostado: R$4000,00
+12345678910 Tipo de Jogo: Dados | Resultado: Derrota | Valor Apostado: R$3000,00
+12345678910 Tipo de Jogo: Dados | Resultado: Vitória | Valor Apostado: R$100,00
+12345678910 Tipo de Jogo: Adivinhe | Resultado: Derrota | Valor Apostado: R$2900,00
