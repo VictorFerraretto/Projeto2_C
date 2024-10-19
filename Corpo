@@ -59,7 +59,7 @@ void historico(const char* cpf) {
         char tipo_jogo[20], resultado[10];
         float valor_apostado;
 
-        sscanf(linha, "%[^,],%[^,],%f", tipo_jogo, resultado, &valor_apostado);
+        sscanf(linha, "%s,%s,%f", tipo_jogo, resultado, &valor_apostado);
         printf("Tipo de Jogo: %s | Resultado: %s | Valor Apostado: R$%.2f\n", 
                tipo_jogo, resultado, valor_apostado);
     }
