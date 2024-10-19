@@ -13,6 +13,13 @@ float carteira[max_usu];
 char cpf[12],senha[7];
 int i=0;
 
+//ATUALIZAÇÃO
+void atualização(float *carteira){
+  FILE *carteiraarqui;
+  carteiraarqui = fopen("carteira.bin","wb");
+  size_t escrevendo =fwrite(carteira, sizeof(carteira), max_usu, carteiraarqui);
+  fclose(carteiraarqui);
+}
 // MOSTRAR INVENTARIO
 void seu_inventario(){
     printf("===========Inventário===========\n");
@@ -30,24 +37,28 @@ void seu_inventario(){
 // ADICIONAR RESULTADO AO HISTÓRICO
 void adicionar_historico(const char* cpf, const char* tipo_jogo, const char* resultado, float valor_apostado) {
     char nome_arquivo[30];
-    sprintf(nome_arquivo, "%s_historico.txt", cpf); 
+    sprintf(nome_arquivo, "historico.txt"); 
 
     FILE *arquivo = fopen(nome_arquivo, "a");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de histórico.\n");
         return;
     }
+     
+    fprintf(arquivo, "%s Tipo de Jogo: %s | Resultado: %s | Valor Apostado: R$%.2f\n", cpf, tipo_jogo, resultado, valor_apostado);
+    
 
-    fprintf(arquivo, "%s,%s,%.2f\n", tipo_jogo, resultado, valor_apostado);
+     
+    
     fclose(arquivo);
 }
 
 // EXIBIR HISTÓRICO
 void historico(const char* cpf) {
     char nome_arquivo[30];
-    sprintf(nome_arquivo, "%s_historico.txt", cpf);
+ 
 
-    FILE *arquivo = fopen(nome_arquivo, "r");
+    FILE *arquivo = fopen("historico.txt", "r");
     if (arquivo == NULL) {
         printf("Erro ao abrir o arquivo de histórico.\n");
         return;
@@ -55,16 +66,21 @@ void historico(const char* cpf) {
 
     char linha[100];
     printf("\n=========== HISTÓRICO ===========\n");
-    while (fgets(linha, sizeof(linha), arquivo)) {
-        char tipo_jogo[20], resultado[10];
-        float valor_apostado;
+    while (fgets(linha, sizeof(linha),arquivo) != NULL) {
 
-        sscanf(linha, "%s,%s,%f", tipo_jogo, resultado, &valor_apostado);
-        printf("Tipo de Jogo: %s | Resultado: %s | Valor Apostado: R$%.2f\n", 
-               tipo_jogo, resultado, valor_apostado);
+        char *espaco = strchr(linha, ' '); 
+        if (espaco != NULL) {
+            *espaco = '\0'; 
+
+            if (strcmp(linha, cpf) == 0) {
+                printf("%s", espaco + 1); 
+            }
+        }
     }
     fclose(arquivo);
     printf("===================================\n");
+    printf("\n<--- volte com 'ENTER'\n");
+    getchar();
 }
 
 
@@ -353,10 +369,12 @@ void menu_jogos(){
     switch (cont){
       case 1:
         dice(carteira);
+        atualização(carteira);
         getchar();
         break;
       case 2:
         guess(carteira);
+        atualização(carteira);
         getchar();
         break;
       case 3:
@@ -366,13 +384,6 @@ void menu_jogos(){
   };
 };
 
-// ATUALIZAÇÃO
-void atualização(float *carteira){
-  FILE *carteiraarqui;
-  carteiraarqui = fopen("carteira.bin","wb");
-  size_t escrevendo =fwrite(carteira, sizeof(carteira), max_usu, carteiraarqui);
-  fclose(carteiraarqui);
-}
 
 // MENU PRINCIPAL
 void menu(){
@@ -407,10 +418,12 @@ void menu(){
         break;
       case 3:
         depositar(carteira);
+        atualização(carteira);
         getchar();
         break;
       case 4:
         sacar(carteira);
+        atualização(carteira);
         getchar();
         break;
       case 5:
@@ -421,7 +434,7 @@ void menu(){
         break;
       case 7:
         printf("DESCONECTANDO...\n");
-        atualização(carteira);
+        
         return;
     }
   }
