@@ -37,52 +37,6 @@ void atualização(float *carteira){
 }
 
 
-// DICE
-void dice(float *carteira){
-    int dados[4] = {};
-    float aposta= apostar(carteira);
-    carteira[indice] -= aposta;
-    printf("\n===========DADOS===========\n");
-    srand(time(NULL));
-    for (int i = 0; i<4;i++){
-
-         dados[i]= rand() % 6 + 1;
-
-    }
-    printf ("Você joga os dados ...\n");
-    sleep(1);
-    printf("Você tira %d e %d\n",dados[0] ,dados[1]);
-    sleep(1.5);
-    int pontos_player= dados[0] + dados[1];
-    printf ("A mesa joga os dados ...\n");
-    sleep(2);
-    printf("Ela tira %d e %d\n",dados[2] ,dados[3]);
-    sleep(1);
-    printf("\n-------------------------\n");
-    int pontos_mesa = dados[2] + dados[3];
-    if (pontos_player < pontos_mesa){
-        printf("Que pena!! você PERDEU :(\n");
-        printf("Como você apostou R$%.2f você perdeu - R$%.2f.\n",aposta,aposta);
-        printf("============================\n");
-        adicionar_historico(cpf,"Dados", "Derrota", aposta);
-    }
-    else if (pontos_player> pontos_mesa){
-        printf("Parabens, você ganhou!!\n");
-        printf("Como você apostou R$%.2f você ganha + R$%.2f.\n",aposta,aposta);
-        carteira[indice] += aposta * 2;
-        printf("============================\n");
-        adicionar_historico(cpf,"Dados", "Vitória", aposta);
-    }
-    else if (pontos_player == pontos_mesa){
-        printf("UAU!! vocês EMPATARAM.\n");
-        printf("Como você apostou R$%.2f você receberá R$%.2f de volta.\n",aposta,aposta);
-        carteira[indice] += aposta;
-        printf("============================\n");
-        adicionar_historico(cpf,"Dados", "Empate", aposta);
-    }
-    sleep(2);
-
-}
 
 //ATUALIZAÇÃO
 void atualização(float *carteira){
@@ -567,6 +521,7 @@ void guess(float *carteira){
 }
 }
 
+
 // DICE
 void dice(float *carteira){
     int dados[4] = {};
@@ -592,7 +547,7 @@ void dice(float *carteira){
     int pontos_mesa = dados[2] + dados[3];
     if (pontos_player < pontos_mesa){
         printf("Que pena!! você PERDEU :(\n");
-        printf("Como você apostou R$%.2f você perdeu R$%.2f.\n",aposta,aposta);
+        printf("Como você apostou R$%.2f você perdeu - R$%.2f.\n",aposta,aposta);
         printf("============================\n");
         adicionar_historico(cpf,"Dados", "Derrota", aposta);
     }
