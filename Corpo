@@ -12,6 +12,31 @@ int indice;
 float carteira[max_usu];
 char cpf[12],senha[7];
 int i=0;
+typedef struct {
+
+    int vermelho;
+    int amarelo;
+    int azul;
+    int verde;
+    int ciano;
+    int roxo;
+} item;
+item itens[100];
+
+//ATUALIZAÇÃO
+void atualização(float *carteira){
+  FILE *carteiraarqui;
+  FILE *cores;
+  carteiraarqui = fopen("carteira.bin","wb");
+  size_t escrevendo =fwrite(carteira, sizeof(carteira), max_usu, carteiraarqui);
+  fclose(carteiraarqui);
+    cores = fopen("itens.bin","wb");
+    fwrite(itens,sizeof(item),100,cores);
+    fclose(cores);
+
+}
+
+
 
 //ATUALIZAÇÃO
 void atualização(float *carteira){
@@ -21,18 +46,120 @@ void atualização(float *carteira){
   fclose(carteiraarqui);
 }
 // MOSTRAR INVENTARIO
-void seu_inventario(){
+void seu_inventario( item *itens){
+    int x;
+   
     printf("===========Inventário===========\n");
     printf("| REAIS: %.2f\n", carteira[indice]);
-    printf("| ITENS: \n");
-   //ver depois 
-    printf("===========================\n");
-    printf("\n<--- volte com 'ENTER'\n"); 
-    getchar();
-    return;	
+    printf("| ITENS: \x1b[0m\n");
+    printf("|-------------------------------\n");
+    printf("| 1- Normal (para sair clique sem alteração escolha esse!!)\n");
+    if (itens[indice].vermelho == 0){
+        printf("|\033[31;9m 2- Vermelho \033[0m\n");
+    }
+    else{
+        printf("|\x1b[31m 2- Vermelho\033[0m\n");
+    }
+    if (itens[indice].amarelo == 0){
+        printf("|\033[33;9m 3- Amarelo \033[0m\n");
+    }  
+    else{
+        printf("|\033[33m 3- Amarelo\033[0m\n");
+    } 
+    if (itens[indice].azul == 0){
+        printf("|\033[34;9m 4- lilás \033[0m\n");
+    } 
+    else{
+        printf("|\033[34m 4- lilás\033[0m\n");
+    }  
+    if (itens[indice].verde == 0){
+        printf("|\033[32;9m 5- Verde \033[0m\n");
+    }  
+    else{
+        printf("|\033[32m 5- Verde\033[0m\n");
+    } 
+    if (itens[indice].ciano == 0){
+        printf("|\033[36;9m 6- Ciano \033[0m\n");
+    } 
+    else{
+        printf("|\033[36m 6- Ciano\033[0m\n");
+    }  
+    if (itens[indice].roxo == 0){
+        printf("|\033[35;9m 7- Roxo \033[0m\n");
+    }
+    else{
+        printf("|\033[35m 7- Roxo\033[0m\n");
+    }
+    printf("| ");
+    while(1){
+        scanf("%d",&x);
 
-};
+    switch (x){
+    case 1:
+      printf("\x1b[0m");
+      return;
+    case 2:
+      if (itens[indice].vermelho == 0){
+        printf("Essa cor está bloqueada, para desbloquear compre na loja!\n");
+        continue;
+      }
+      else{
+      printf("\x1b[31m");
+      return;
+      }
+    case 3:
+      if (itens[indice].amarelo == 0){
+        printf("Essa cor está bloqueada, para desbloquear compre na loja!\n");
+        continue;
+      }
+      else{
+    printf("\x1b[33m");
+      return;
+      }
+    case 4:
+          if (itens[indice].azul == 0){
+        printf("Essa cor está bloqueada, para desbloquear compre na loja!\n");
+        continue;
+      }
+      else{
+        printf("\x1b[34m");
+        return;
+      }
+    case 5:
+          if (itens[indice].verde == 0){
+        printf("Essa cor está bloqueada, para desbloquear compre na loja!\n");
+        continue;
+      }
+      else{
+        printf("\x1b[32m");
+        return;
+      }
+    case 6:
+          if (itens[indice].ciano == 0){
+        printf("Essa cor está bloqueada, para desbloquear compre na loja!\n");
+        continue;
+      }
+      else{
+        printf("\x1b[36m");
+        return;
+      }
+    case 7:
+      if (itens[indice].roxo == 0){
+        printf("Essa cor está bloqueada, para desbloquear compre na loja!\n");
+        continue;
+      }
+      else{
+        printf("\x1b[35m");
+        return;
+      }
+    default:
+    return;
+    
 
+
+    }
+  }
+}
 
 // ADICIONAR RESULTADO AO HISTÓRICO
 void adicionar_historico(const char* cpf, const char* tipo_jogo, const char* resultado, float valor_apostado) {
@@ -134,11 +261,99 @@ void sacar(float *carteira) {
   getchar();
 }
 
-// APENAS LOGIN, CARTEIRA E SENHA
+//LOJA
+void loja(float *carteira){
+  int x;
+  printf("==============LOJA==============\n");
+  printf("1- Vermelho (R$1.000)\n");
+  printf("2- amarelo (R$5.000)\n");
+  printf("3- Lilás (8.000)\n");
+  printf("4- Verde (R$10.000)\n");
+  printf("5- Ciano (R$15.000)\n");
+  printf("6- Roxo (R$20.000)\n");
+ printf("===============================\n");
+ printf("Digite a cor você quer comprar ('0' se nenhuma): ");
+ while (1){
+ scanf("%d", &x);
+  switch (x){
+  case 1:
+    if (carteira[indice]< 1000){
+      printf("Saldo Insuficiente!!\n");
+      continue;
+    }
+    else{
+      printf("Obrigado pela compra!\n");
+      carteira[indice]-=1000;
+      itens[0].vermelho=1;
+      return;
+    }
+  case 2:
+    if (carteira[indice]< 5000){
+      printf("Saldo Insuficiente!!\n");
+      continue;
+    }
+    else{
+      printf("Obrigado pela compra!\n");
+      carteira[indice]-=5000;
+      itens[0].amarelo=1;
+      return;
+    }  
+  case 3:
+    if (carteira[indice]< 8000){
+      printf("Saldo Insuficiente!!\n");
+      continue;
+    }
+    else{
+      printf("Obrigado pela compra!\n");
+      carteira[indice]-=8000;
+      itens[0].azul=1;
+      return;
+    } 
+  case 4:
+    if (carteira[indice]< 10000){
+      printf("Saldo Insuficiente!!\n");
+      continue;
+    }
+    else{
+      printf("Obrigado pela compra!\n");
+      carteira[indice]-=10000;
+      itens[0].verde=1;
+      return;
+    }  
+  case 5:
+    if (carteira[indice]< 15000){
+      printf("Saldo Insuficiente!!\n");
+      continue;
+    }
+    else{
+      printf("Obrigado pela compra!\n");
+      carteira[indice]-=15000;
+      itens[0].ciano=1;
+      return;
+    }  
+  case 6:
+    if (carteira[indice]< 20000){
+      printf("Saldo Insuficiente!!\n");
+      continue;
+    }
+    else{
+      printf("Obrigado pela compra!\n");
+      carteira[indice]-=20000;
+      itens[0].roxo=1;
+      return;
+    }
+  
+  default:
+    return;
+  }
+}
+}
+// ARQUIVOS 
 void iniciacao_arquivos(float *carteira){
   FILE *arquivoini;
   FILE *arquivoini2;
   FILE *carteiraarqui;
+  FILE *cores;
   char compiler[2000];
 
 
@@ -163,9 +378,11 @@ void iniciacao_arquivos(float *carteira){
   carteiraarqui = fopen("carteira.bin","rb");
   fread(carteira, sizeof(float), max_usu, carteiraarqui);
   fclose(carteiraarqui);
-
-
+    cores = fopen("itens.bin","rb");
+    size_t lendo = fread(itens,sizeof(item),100,cores);
+    fclose(cores);
 }
+
 void login(int *indice){
   int x;
   while (1){
@@ -304,6 +521,7 @@ void guess(float *carteira){
 }
 }
 
+
 // DICE
 void dice(float *carteira){
     int dados[4] = {};
@@ -329,7 +547,7 @@ void dice(float *carteira){
     int pontos_mesa = dados[2] + dados[3];
     if (pontos_player < pontos_mesa){
         printf("Que pena!! você PERDEU :(\n");
-        printf("Como você apostou R$%.2f você perdeu R$%.2f.\n",aposta,aposta);
+        printf("Como você apostou R$%.2f você perdeu - R$%.2f.\n",aposta,aposta);
         printf("============================\n");
         adicionar_historico(cpf,"Dados", "Derrota", aposta);
     }
@@ -413,7 +631,7 @@ void menu(){
         getchar();
         break;
       case 2:
-        seu_inventario();
+        seu_inventario(itens);
         getchar();
         break;
       case 3:
@@ -427,6 +645,8 @@ void menu(){
         getchar();
         break;
       case 5:
+        loja(carteira);
+        atualização(carteira);
         break;
       case 6:
         historico(cpf);
@@ -434,12 +654,11 @@ void menu(){
         break;
       case 7:
         printf("DESCONECTANDO...\n");
-        
+        printf("\x1b[0m");
         return;
     }
   }
 }
-
 int main(){
   setlocale(LC_ALL, "Portuguese");
   iniciacao_arquivos(carteira);
