@@ -503,7 +503,7 @@ void guess(float *carteira){
             }
             else {
                 printf("***UFA!! Você ACERTOU!!!***\n");
-                printf("Como você apostou R$%.2f você ganha + R$%.2f.\n",aposta,aposta);
+                printf("Como você apostou R$%.2f você ganha + R$%.2f.\n",aposta,aposta *3);
                 printf("====================================");
                 sleep(2);
                 adicionar_historico(cpf,"Adivinhe", "Vitória", aposta);
@@ -524,7 +524,7 @@ void guess(float *carteira){
     else if (num_adv == num_escolhido){
         sleep(2);
         printf("***Parabéns você ACERTOU!!!***\n");
-        printf("Como você apostou R$%.2f você ganha + R$%.2f.\n",aposta,aposta);
+        printf("Como você apostou R$%.2f você ganha + R$%.2f.\n",aposta,aposta *3);
         printf("====================================");
         sleep(2);
         adicionar_historico(cpf,"Adivinhe", "Vitória", aposta);
