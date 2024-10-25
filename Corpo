@@ -36,15 +36,6 @@ void atualização(float *carteira){
 
 }
 
-
-
-//ATUALIZAÇÃO
-void atualização(float *carteira){
-  FILE *carteiraarqui;
-  carteiraarqui = fopen("carteira.bin","wb");
-  size_t escrevendo =fwrite(carteira, sizeof(carteira), max_usu, carteiraarqui);
-  fclose(carteiraarqui);
-}
 // MOSTRAR INVENTARIO
 void seu_inventario( item *itens){
     int x;
