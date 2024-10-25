@@ -277,39 +277,6 @@ void loja(float *carteira){
  scanf("%d", &x);
   switch (x){
   case 1:
-    if (carteira[indice]< 1000){
-      printf("Saldo Insuficiente!!\n");
-      continue;
-    }
-    else{
-      printf("Obrigado pela compra!\n");
-      carteira[indice]-=1000;
-      itens[0].vermelho=1;
-      return;
-    }
-  case 2:
-    if (carteira[indice]< 5000){
-      printf("Saldo Insuficiente!!\n");
-      continue;
-    }
-    else{
-      printf("Obrigado pela compra!\n");
-      carteira[indice]-=5000;
-      itens[0].amarelo=1;
-      return;
-    }  
-  case 3:
-    if (carteira[indice]< 8000){
-      printf("Saldo Insuficiente!!\n");
-      continue;
-    }
-    else{
-      printf("Obrigado pela compra!\n");
-      carteira[indice]-=8000;
-      itens[0].azul=1;
-      return;
-    } 
-  case 4:
     if (carteira[indice]< 10000){
       printf("Saldo Insuficiente!!\n");
       continue;
@@ -317,10 +284,10 @@ void loja(float *carteira){
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=10000;
-      itens[0].verde=1;
+      itens[0].vermelho=1;
       return;
-    }  
-  case 5:
+    }
+  case 2:
     if (carteira[indice]< 15000){
       printf("Saldo Insuficiente!!\n");
       continue;
@@ -328,10 +295,10 @@ void loja(float *carteira){
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=15000;
-      itens[0].ciano=1;
+      itens[0].amarelo=1;
       return;
     }  
-  case 6:
+  case 3:
     if (carteira[indice]< 20000){
       printf("Saldo Insuficiente!!\n");
       continue;
@@ -339,6 +306,39 @@ void loja(float *carteira){
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=20000;
+      itens[0].azul=1;
+      return;
+    } 
+  case 4:
+    if (carteira[indice]< 25000){
+      printf("Saldo Insuficiente!!\n");
+      continue;
+    }
+    else{
+      printf("Obrigado pela compra!\n");
+      carteira[indice]-=25000;
+      itens[0].verde=1;
+      return;
+    }  
+  case 5:
+    if (carteira[indice]< 30000){
+      printf("Saldo Insuficiente!!\n");
+      continue;
+    }
+    else{
+      printf("Obrigado pela compra!\n");
+      carteira[indice]-=30000;
+      itens[0].ciano=1;
+      return;
+    }  
+  case 6:
+    if (carteira[indice]< 35000){
+      printf("Saldo Insuficiente!!\n");
+      continue;
+    }
+    else{
+      printf("Obrigado pela compra!\n");
+      carteira[indice]-=35000;
       itens[0].roxo=1;
       return;
     }
