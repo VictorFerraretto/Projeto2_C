@@ -4,11 +4,11 @@
 ## Victor Ferraretto Novais - RA: 24.124.070-4
 
 ## Objetivo do Projeto
-O projeto é um jogo de apostas em C que possibilita o usuário realizar depósitos, saques e jogar jogos como "Adivinhe" e "Dados". Os usuários podem comprar itens coloridos usando suas moedas virtuais e manter um histórico de suas apostas. O sistema também permite cadastro e login utilizando CPF e senha, e apresenta um inventário de itens adquiridos.
+O projeto é um jogo de apostas em C que possibilita o usuário realizar depósitos, saques e jogar jogos como "Adivinhe" e "Dados". Os usuários podem comprar itens coloridos usando seus reais e manter um histórico de suas apostas. O sistema também permite cadastro e login utilizando CPF e senha, e apresenta um inventário de itens adquiridos.
 
 ## Funcionalidades
 - Os usuários podem se cadastrar usando CPF e senha, e realizar login posteriormente.
-- Depositar e sacar dinheiro da carteira virtual.
+- Depositar e sacar reais da carteira virtual.
 - Oferece dois jogos principais "Adivinhe" e "Dados", onde os usuários podem apostar.
 - Os usuários podem visualizar itens que adquiriram.
 - Permite a compra de itens com diferentes preços.
