@@ -16,7 +16,7 @@ O projeto é um jogo de apostas em C que possibilita o usuário realizar depósi
 
 ## Forma de execução 
 - Baixe os arquivos "Corpo","carteira.bin","itens.bin","historico.txt", "login.txt", "senhas.txt" e depois coloque os arquivos no "replit" e certifique-se que eles estão postos diretamente no programa e execute o "Corpo".
-- Para entrar no programa digite um desses logins (CPFS + senhas) ou crie um novo:
+- Para entrar no programa digite um desses logins (CPFS + senhas) ou CRIE UM NOVO!:
 1. CPF: 44921880883 // senha: 000000;
 2. CPF: 12345678910 // senha: 123456;
 3. CPF: 11122233344 // senha: 654321;
