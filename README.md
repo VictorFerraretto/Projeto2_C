@@ -10,8 +10,8 @@ O projeto é um jogo de apostas em C que possibilita o usuário realizar depósi
 - Os usuários podem se cadastrar usando CPF e senha, e realizar login posteriormente.
 - Depositar e sacar reais da carteira virtual.
 - Oferece dois jogos principais "Adivinhe" e "Dados", onde os usuários podem apostar.
-- Os usuários podem visualizar itens que adquiriram.
 - Permite a compra de itens com diferentes preços.
+- Os usuários podem visualizar itens que adquiriram.
 - Armazena o histórico de apostas dos usuários em um arquivo de texto.
 
 ## Forma de execução 
