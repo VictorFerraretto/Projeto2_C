@@ -507,7 +507,7 @@ void guess(float *carteira){
                 printf("====================================");
                 sleep(2);
                 adicionar_historico(cpf,"Adivinhe", "Vitória", aposta);
-                carteira[indice] += aposta * 2;
+                carteira[indice] += aposta * 4;
                 break;
             }
     }
@@ -528,7 +528,7 @@ void guess(float *carteira){
         printf("====================================");
         sleep(2);
         adicionar_historico(cpf,"Adivinhe", "Vitória", aposta);
-        carteira[indice] += aposta * 2;
+        carteira[indice] += aposta * 4;
         break;
     }
     }
@@ -593,8 +593,8 @@ void menu_jogos(){
     printf("\n");
     printf("=============JOGOS==========\n");
     printf("--------------------------\n");
-    printf("-> 1-Dados\n");
-    printf("-> 2-Adivinhe\n");
+    printf("-> 1-Dados (2x)\n");
+    printf("-> 2-Adivinhe (4x)\n");
     printf("-> 3-Volte para o menu\n");
     printf("============================\n");
     scanf("%d", &cont);
