@@ -284,7 +284,7 @@ void loja(float *carteira){
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=10000;
-      itens[0].vermelho=1;
+      itens[indice].vermelho=1;
       return;
     }
   case 2:
@@ -295,7 +295,7 @@ void loja(float *carteira){
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=15000;
-      itens[0].amarelo=1;
+      itens[indice].amarelo=1;
       return;
     }  
   case 3:
@@ -306,7 +306,7 @@ void loja(float *carteira){
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=20000;
-      itens[0].azul=1;
+      itens[indice].azul=1;
       return;
     } 
   case 4:
@@ -317,7 +317,7 @@ void loja(float *carteira){
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=25000;
-      itens[0].verde=1;
+      itens[indice].verde=1;
       return;
     }  
   case 5:
@@ -328,7 +328,7 @@ void loja(float *carteira){
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=30000;
-      itens[0].ciano=1;
+      itens[indice].ciano=1;
       return;
     }  
   case 6:
@@ -339,7 +339,7 @@ void loja(float *carteira){
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=35000;
-      itens[0].roxo=1;
+      itens[indice].roxo=1;
       return;
     }
   
