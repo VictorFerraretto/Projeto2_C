@@ -1,4 +1,4 @@
-# Apostas em C
+# Jogos do Destino
 
 ## Eduardo Finamore Horta - RA: 24.124.004-3 
 ## Victor Ferraretto Novais - RA: 24.124.070-4
