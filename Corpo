@@ -44,7 +44,7 @@ void seu_inventario( item *itens){
     printf("| REAIS: %.2f\n", carteira[indice]);
     printf("| ITENS: \x1b[0m\n");
     printf("|-------------------------------\n");
-    printf("| 1- Normal (para sair clique sem alteração escolha esse!!)\n");
+    printf("| 1- Normal (para sair sem alteração escolha esse!!)\n");
     if (itens[indice].vermelho == 0){
         printf("|\033[31;9m 2- Vermelho \033[0m\n");
     }
