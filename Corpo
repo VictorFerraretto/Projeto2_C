@@ -39,12 +39,12 @@ void atualização(float *carteira){
 // MOSTRAR INVENTARIO
 void seu_inventario( item *itens){
     int x;
-   
+
     printf("===========Inventário===========\n");
     printf("| REAIS: %.2f\n", carteira[indice]);
     printf("| ITENS: \x1b[0m\n");
     printf("|-------------------------------\n");
-    printf("| 1- Normal (para sair sem alteração escolha esse!!)\n");
+    printf("| 1- Normal (para sair clique sem alteração escolha esse!!)\n");
     if (itens[indice].vermelho == 0){
         printf("|\033[31;9m 2- Vermelho \033[0m\n");
     }
@@ -58,10 +58,10 @@ void seu_inventario( item *itens){
         printf("|\033[33m 3- Amarelo\033[0m\n");
     } 
     if (itens[indice].azul == 0){
-        printf("|\033[34;9m 4- lilás \033[0m\n");
+        printf("|\033[34;9m 4- Azul \033[0m\n");
     } 
     else{
-        printf("|\033[34m 4- lilás\033[0m\n");
+        printf("|\033[34m 4- Azul\033[0m\n");
     }  
     if (itens[indice].verde == 0){
         printf("|\033[32;9m 5- Verde \033[0m\n");
@@ -145,7 +145,7 @@ void seu_inventario( item *itens){
       }
     default:
     return;
-    
+
 
 
     }
@@ -162,19 +162,19 @@ void adicionar_historico(const char* cpf, const char* tipo_jogo, const char* res
         printf("Erro ao abrir o arquivo de histórico.\n");
         return;
     }
-     
-    fprintf(arquivo, "%s Tipo de Jogo: %s | Resultado: %s | Valor Apostado: R$%.2f\n", cpf, tipo_jogo, resultado, valor_apostado);
-    
 
-     
-    
+    fprintf(arquivo, "%s Tipo de Jogo: %s | Resultado: %s | Valor Apostado: R$%.2f\n", cpf, tipo_jogo, resultado, valor_apostado);
+
+
+
+
     fclose(arquivo);
 }
 
 // EXIBIR HISTÓRICO
 void historico(const char* cpf) {
     char nome_arquivo[30];
- 
+
 
     FILE *arquivo = fopen("historico.txt", "r");
     if (arquivo == NULL) {
@@ -237,7 +237,7 @@ void sacar(float *carteira) {
         if (valor > carteira[indice]) {
             printf("ERRO: Você não pode sacar dinheiro a mais do que o disponível em sua carteira!! (carteira: %.2f)\n",
                   carteira[indice]);
-          
+
 
         }
         else{
@@ -257,8 +257,8 @@ void loja(float *carteira){
   int x;
   printf("==============LOJA==============\n");
   printf("1- Vermelho (R$10.000)\n");
-  printf("2- amarelo (R$15.000)\n");
-  printf("3- Lilás (20.000)\n");
+  printf("2- Amarelo (R$15.000)\n");
+  printf("3- Azul (20.000)\n");
   printf("4- Verde (R$25.000)\n");
   printf("5- Ciano (R$30.000)\n");
   printf("6- Roxo (R$35.000)\n");
@@ -272,6 +272,10 @@ void loja(float *carteira){
       printf("Saldo Insuficiente!!\n");
       continue;
     }
+    else if(itens[indice].vermelho==1){
+      printf("Esta cor ja foi comprada!!\n");
+      continue;
+    }  
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=10000;
@@ -281,6 +285,10 @@ void loja(float *carteira){
   case 2:
     if (carteira[indice]< 15000){
       printf("Saldo Insuficiente!!\n");
+      continue;
+    }
+    else if(itens[indice].amarelo==1){
+      printf("Esta cor ja foi comprada!!\n");
       continue;
     }
     else{
@@ -294,6 +302,10 @@ void loja(float *carteira){
       printf("Saldo Insuficiente!!\n");
       continue;
     }
+    else if(itens[indice].azul==1){
+      printf("Esta cor ja foi comprada!!\n");
+      continue;
+    }
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=20000;
@@ -303,6 +315,10 @@ void loja(float *carteira){
   case 4:
     if (carteira[indice]< 25000){
       printf("Saldo Insuficiente!!\n");
+      continue;
+    }
+    else if(itens[indice].verde==1){
+      printf("Esta cor ja foi comprada!!\n");
       continue;
     }
     else{
@@ -316,6 +332,10 @@ void loja(float *carteira){
       printf("Saldo Insuficiente!!\n");
       continue;
     }
+    else if(itens[indice].ciano==1){
+      printf("Esta cor ja foi comprada!!\n");
+      continue;
+    }
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=30000;
@@ -327,13 +347,17 @@ void loja(float *carteira){
       printf("Saldo Insuficiente!!\n");
       continue;
     }
+    else if(itens[indice].roxo==1){
+      printf("Esta cor ja foi comprada!!\n");
+      continue;
+    }
     else{
       printf("Obrigado pela compra!\n");
       carteira[indice]-=35000;
       itens[indice].roxo=1;
       return;
     }
-  
+
   default:
     return;
   }
@@ -442,7 +466,7 @@ int apostar(float *carteira){
   scanf("%f", &aposta);
     if (aposta> carteira[indice]){
       printf("Você não tem dinheiro suficiente para apostar esse valor!!\n");
-        
+
     }
     else{
       break;
